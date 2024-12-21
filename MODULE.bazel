@@ -1,0 +1,29 @@
+module(
+    name = "rules_python_2283_mvce",
+)
+
+bazel_dep(
+    name = "rules_python",
+    version = "1.0.0",
+)
+
+python_version = "3.12.3"
+
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+python.toolchain(
+    is_default = True,
+    python_version = python_version,
+)
+
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+
+# Install all python deps, using the python interpreter above.
+# For each package foo listed in requirements.txt, this creates a @pip_foo repo
+# with a top-level :pkg py_library target.
+pip.parse(
+    hub_name = "pip",
+    python_version = python_version,
+    quiet = False,
+    requirements_lock = ":requirements.txt",
+)
+use_repo(pip, "pip")
