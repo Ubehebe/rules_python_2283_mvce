@@ -1,0 +1,18 @@
+diff --git a/python/private/repo_utils.bzl b/python/private/repo_utils.bzl
+index 0e3f7b02..c8006348 100644
+--- a/python/private/repo_utils.bzl
++++ b/python/private/repo_utils.bzl
+@@ -268,12 +268,12 @@ def _which_unchecked(mrctx, binary_name):
+         * `describe_failure`: `Callable | None`; takes no args. If the
+           binary couldn't be found, provides a detailed error description.
+     """
+-    path = _getenv(mrctx, "PATH", "")
+     binary = mrctx.which(binary_name)
+     if binary:
+         _watch(mrctx, binary)
+         describe_failure = None
+     else:
++        path = _getenv(mrctx, "PATH", "")
+         describe_failure = lambda: _which_describe_failure(binary_name, path)
+ 
+     return struct(

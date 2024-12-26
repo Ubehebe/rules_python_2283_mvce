@@ -7,6 +7,15 @@ bazel_dep(
     version = "1.0.0",
 )
 
+# uncomment this to make the bug go away.
+#single_version_override(
+#    module_name = "rules_python",
+#    patch_strip = 1,  # strip leading rules_python-xxx/ from archive before patching
+#    patches = [
+#        "rules_python.patch",
+#    ],
+#)
+
 python_version = "3.12.3"
 
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
